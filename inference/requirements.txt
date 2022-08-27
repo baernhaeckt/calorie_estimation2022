@@ -1,2 +1,6 @@
-fastapi
+fastapi==0.75
 uvicorn
+scikit-image
+requests
+python-multipart
+tensorflow~=2.5.0

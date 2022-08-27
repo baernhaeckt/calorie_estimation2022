@@ -103,26 +103,26 @@ class CalorieService:
             "pudding": 15
         }
 
-        def get_calories_per_category(category: str, food_area: float) -> float:
-            if category in self.calories_per_unit:
-                return self.calories_per_unit[category]
-            else:
-                return self.calories_per_sq_centimeter[category] * food_area
+    def get_calories_per_category(self, category: str, food_area: float) -> float:
+        if category in self.calories_per_unit:
+            return self.calories_per_unit[category]
+        else:
+            return self.calories_per_sq_centimeter[category] * food_area
 
-        def get_protein_per_category(category: str, food_area: float) -> float:
-            if category in self.protein_per_unit:
-                return self.protein_per_unit[category]
-            else:
-                return self.protein_per_sq_centimeter[category] * food_area
+    def get_protein_per_category(self, category: str, food_area: float) -> float:
+        if category in self.protein_per_unit:
+            return self.protein_per_unit[category]
+        else:
+            return self.protein_per_sq_centimeter[category] * food_area
 
-        def get_fat_per_category(category: str, food_area: float) -> float:
-            if category in self.fat_per_unit:
-                return self.fat_per_unit[category]
-            else:
-                return self.fat_per_sq_centimeter[category] * food_area
+    def get_fat_per_category(self, category: str, food_area: float) -> float:
+        if category in self.fat_per_unit:
+            return self.fat_per_unit[category]
+        else:
+            return self.fat_per_sq_centimeter[category] * food_area
 
-        def get_carbohydrates_per_category(category: str, food_area: float) -> float:
-            if category in self.carbohydrates_per_unit:
-                return self.carbohydrates_per_unit[category]
-            else:
-                return self.carbohydrates_per_sq_centimeter[category] * food_area
+    def get_carbohydrates_per_category(self, category: str, food_area: float) -> float:
+        if category in self.carbohydrates_per_unit:
+            return self.carbohydrates_per_unit[category]
+        else:
+            return self.carbohydrates_per_sq_centimeter[category] * food_area
