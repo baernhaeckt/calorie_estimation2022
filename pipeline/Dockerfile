@@ -9,7 +9,10 @@ RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machi
 # Install Common Dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    wget
+    wget \
+    ffmpeg \
+    libsm6 \
+    libxext6
 
 # Conda Environment
 ENV MINICONDA_VERSION py38_4.11.0
