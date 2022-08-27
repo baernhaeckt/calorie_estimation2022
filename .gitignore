@@ -134,3 +134,5 @@ dmypy.json
 # Azure ML
 **/.amlignore
 
+# Tensorflow weight
+*.h5
