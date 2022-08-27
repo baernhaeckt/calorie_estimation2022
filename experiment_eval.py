@@ -15,26 +15,6 @@ class Eval:
 
         for image_id in dataset_test.image_ids:
             eval_image = dataset_test.load_image(image_id)
-            mask, class_ids = dataset_test.load_mask(image_id)
-            bbbox = utils.extract_bboxes(mask)
-            
-            # Print eval image properties
-            print("Eval image id:", image_id, dataset_test.image_reference(image_id))
-            print("Eval image:", eval_image)
-            print("Eval mask", mask)
-            print("Eval class ids", class_ids)
-            print("Eval bbox", bbbox)
-
-            # Display ground truth
-            visualize.display_instances(
-                eval_image,
-                bbbox,
-                mask,
-                class_ids,
-                dataset_test.class_names
-            )
-
-            run_context.parent.log_image(f"Ground-Truth {image_id}", plot=plt)
 
             # Execute and visualize detection
             results = model.detect([eval_image])
@@ -48,4 +28,4 @@ class Eval:
                 r["scores"]
             )
 
-            run_context.parent.log_image(f"Eval {image_id}", plot=plt)
+            run_context.log_image(f"Eval {image_id}", plot=plt)

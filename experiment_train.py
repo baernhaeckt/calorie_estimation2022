@@ -25,7 +25,7 @@ class Train:
         ])
 
         # Create Azure ML Logger
-        logger: AzureMlLogger = AzureMlLogger(run_context.parent)
+        logger: AzureMlLogger = AzureMlLogger(run_context)
 
         # Train network heads
         print('[*] Training network heads.')
