@@ -27,7 +27,7 @@ import os
 ROOT_DIR = os.path.abspath("..")
 sys.path.append(ROOT_DIR) 
 
-from src.mask_rcnn.nn import utils
+from mask_rcnn import utils
 
 
 ############################################################

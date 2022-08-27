@@ -24,7 +24,7 @@ import tensorflow.keras.layers as KE
 import tensorflow.keras.models as KM
 import tensorflow.keras.utils as KU
 
-from src.mask_rcnn.nn import utils
+from mask_rcnn import utils
 
 # Requires TensorFlow 2.0.0+ and Keras 2.0.0+.
 from distutils.version import LooseVersion
