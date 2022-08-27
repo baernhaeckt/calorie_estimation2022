@@ -11,7 +11,7 @@ def register_model(run_context: Run) -> str:
     checkpoint_files = [f for f in run_log_files if "mask_rcnn_custom-food" in f]
     
     last_checkpoint: str = checkpoint_files[-1]
-    register_model: Model = run_context.register_model(model_name="mask_rcnn_custom_food", model_path=last_checkpoint)
+    register_model: Model = run_context.register_model(model_name="food-segmentation", model_path=last_checkpoint)
     print("[*] Register Model:", register_model)
 
     return last_checkpoint
