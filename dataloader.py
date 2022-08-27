@@ -1,13 +1,10 @@
-import os
-import random
+from typing import Tuple
 import pandas as pd
 import numpy as np
 
 from azureml.core import Workspace, Dataset
-from azureml.data import TabularDataset, FileDataset
+from azureml.data import TabularDataset
 from food_dataset import FoodDataset
-
-from typing import Tuple, List
 
 
 class Dataloader:
@@ -26,12 +23,6 @@ class Dataloader:
 
         return dataset
 
-    def load_test_dataset(self, workspace: Workspace, dataset_name: str) -> List[str]:
-        dataset: FileDataset = Dataset.get_by_name(workspace=workspace, name=dataset_name)
-        test_image_list: List[str] = dataset.download(target_path=os.path.join(self.download_folder, "test"))
-
-        return random.sample(test_image_list, 20)
-
     def load_dataset(self, workspace: Workspace, dataset_name: str) -> pd.DataFrame:
         # Mount dataset
         dataset: TabularDataset = Dataset.get_by_name(workspace=workspace, name=dataset_name)
@@ -43,18 +34,18 @@ class Dataloader:
 
         return df
 
-    def create_train_valid_explain_datasets(self, dataframe: pd.DataFrame) -> Tuple[FoodDataset, FoodDataset, FoodDataset]:
+    def create_train_valid_test_datasets(self, dataframe: pd.DataFrame) -> Tuple[FoodDataset, FoodDataset, FoodDataset]:
         # Create filter column
         for index, row in dataframe.iterrows():
             dataframe.loc[index, "filter_label"] = row.label[0]["label"]
 
-        # Create Explain Dataframe
-        explain_df: pd.DataFrame = pd.DataFrame()
+        # Create Test Dataframe
+        test_df: pd.DataFrame = pd.DataFrame()
         for label in set(dataframe.filter_label):
             filter_idx = np.where(dataframe.filter_label == label)[0]
             random_filter_idx = np.random.choice(filter_idx, 1)
             
-            explain_df = explain_df.append(dataframe.iloc[random_filter_idx])
+            test_df = test_df.append(dataframe.iloc[random_filter_idx])
             dataframe.drop(random_filter_idx, inplace=True, axis=0)
 
 
@@ -68,7 +59,7 @@ class Dataloader:
         # Validation dataset
         dataset_validation: FoodDataset = self._create_food_dataset(valid_df, "Validation")
 
-        # Explain dataset
-        dataset_explain: FoodDataset = self._create_food_dataset(explain_df, "Test")
+        # Test dataset
+        dataset_test: FoodDataset = self._create_food_dataset(test_df, "Test")
 
-        return dataset_train, dataset_validation, dataset_explain
+        return dataset_train, dataset_validation, dataset_test
