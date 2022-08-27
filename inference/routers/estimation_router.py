@@ -24,7 +24,7 @@ def touch():
     return f"Model API is running on ENV {config.settings.ENV}"
 
 
-@router.post("/", response_model=EstimationModel, status_code=200, tags=["estimation"], )
+@router.post("/", status_code=200, tags=["estimation"], )
 async def get_estimations(user_id: str, token: str, webhook_url: str, image: UploadFile = File(...)):
     suffix = Path(image.filename).suffix
     result: List[EstimationModel] = list()
@@ -44,5 +44,7 @@ async def get_estimations(user_id: str, token: str, webhook_url: str, image: Upl
         "estimations": result
     }
 
-    requests.post(webhook_url, JSONResponse(content=jsonable_encoder(estimation_response)))
-    return {"status": "estimation result send to the webhook url"}
+    json_post_message: str = JSONResponse(jsonable_encoder(estimation_response)).body.decode("utf-8")
+    headers = {"Content-type": "application/json"}
+    response_message = requests.post(webhook_url, json_post_message, headers=headers)
+    return {"status": f"Traking callback response {response_message.status_code}"}
